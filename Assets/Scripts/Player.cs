@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Transform player;
-    public Vector2 newPos;
-    public float speed = 3.3F; 
-
+    public float speed; 
+    public Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        
+       
+    }
+    private void Awake()
+    {
+        animator = this.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -22,12 +24,13 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-       newPos = player.position;
-       if(Input.GetKey(KeyCode.W))
-        {
-            Debug.Log('W');
-            newPos.y = player.position.y + speed;
-        }
-        player.position = newPos;
+        var h = Input.GetAxis("Horizontal");
+        var v = Input.GetAxis("Vertical");
+
+        Vector3 vector3 = new Vector3(h, v, 0);
+        vector3 = vector3.normalized * speed * Time.deltaTime;
+        animator.SetFloat("x", v);
+        animator.SetFloat("y", h);
+        this.transform.position += vector3;
     }
 }
