@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Assets.Scripts
 {
@@ -14,7 +15,7 @@ namespace Assets.Scripts
         public int mapWidth;
         public int mapHeight;
         public float noiseScale;
-
+        public Tilemap tilemap;
         public int octaves;
         [Range(0, 1)]
         public float persistance;
@@ -27,9 +28,8 @@ namespace Assets.Scripts
         public TerrainType[] regions;
         public void GenerateMap()
         {
-            float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight, seed, noiseScale, octaves, persistance, lacunarity, offset);
-
-            Color[] colorMap = new Color[mapWidth * mapHeight];
+            tilemap.ClearAllTiles();
+            float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight, seed, noiseScale, octaves, persistance, lacunarity, offset); 
 
             for (int y = 0; y<mapHeight; y++)
             {
@@ -40,21 +40,22 @@ namespace Assets.Scripts
                     {
                         if(currentHeight <= regions[i].height)
                         {
-                            colorMap[y * mapWidth + x] = regions[i].color;
+                            tilemap.SetTile(new Vector3Int(x, y, 0), regions[i].sprite);
+                            //colorMap[y * mapWidth + x] = regions[i].color;
                             break;
                         }
                     }
                 }
             }
             MapDisplay display = FindObjectOfType<MapDisplay>();
-            if(drawMode == DrawMode.NoiseMap)
-            {
-                display.DrawTexture(TextureGenerator.TextureFromHeightMap(noiseMap));
-            }
-           else if(drawMode == DrawMode.ColourMap)
-            {
-                display.DrawTexture(TextureGenerator.TextureFromColourMap(colorMap, mapWidth, mapHeight));
-            }
+           // if(drawMode == DrawMode.NoiseMap)
+           // {
+           //     display.DrawTexture(TextureGenerator.TextureFromHeightMap(noiseMap));
+           // }
+           //else if(drawMode == DrawMode.ColourMap)
+           // {
+           //     display.DrawTexture(TextureGenerator.TextureFromColourMap(colorMap, mapWidth, mapHeight));
+           // }
         }
 
         void OnValidate()
@@ -83,5 +84,5 @@ public struct TerrainType
 {
     public string name;
     public float height;
-    public Color color;
+    public Tile sprite;
 }
