@@ -11,6 +11,7 @@ public class Scenes : MonoBehaviour
     }
     public void Exit()
     {
+        PlayerPrefs.DeleteAll();
         Application.Quit();
     }
 }

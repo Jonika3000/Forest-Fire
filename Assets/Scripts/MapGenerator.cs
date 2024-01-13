@@ -77,6 +77,11 @@ namespace Assets.Scripts
                 octaves = 0;
             }
         }
+
+        public void Awake()
+        {
+            seed = PlayerPrefs.GetInt("WorldSeed");
+        }
     }
 }
 [System.Serializable]

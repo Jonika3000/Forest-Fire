@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Player : MonoBehaviour
 {
     public float speed; 
@@ -9,7 +10,12 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+        if (PlayerPrefs.HasKey("PlayerPositionX") && PlayerPrefs.HasKey("PlayerPositionY"))
+        {
+            this.transform.position = new Vector2(PlayerPrefs.GetFloat("PlayerPositionX"), PlayerPrefs.GetFloat("PlayerPositionY"));
+            Debug.Log(this.transform.position);
+        }
+        
     }
     private void Awake()
     {
@@ -27,6 +33,8 @@ public class Player : MonoBehaviour
         var h = Input.GetAxis("Horizontal");
         var v = Input.GetAxis("Vertical"); 
         Vector3 vector3 = new Vector3(h, v, 0);
+        PlayerPrefs.SetFloat("PlayerPositionX", this.transform.position.x);
+        PlayerPrefs.SetFloat("PlayerPositionY", this.transform.position.y);
         vector3 = vector3.normalized * speed * Time.deltaTime;
         Vector2 normalizedMovement = new Vector2(h, v).normalized;
         if (normalizedMovement.y != 0 || normalizedMovement.x != 0)
