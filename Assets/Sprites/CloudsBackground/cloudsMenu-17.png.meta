@@ -140,7 +140,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      cloudsMenu-17_0: 1593833512895721282
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

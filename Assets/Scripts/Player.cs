@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
         if (PlayerPrefs.HasKey("PlayerPositionX") && PlayerPrefs.HasKey("PlayerPositionY"))
         {
             this.transform.position = new Vector2(PlayerPrefs.GetFloat("PlayerPositionX"), PlayerPrefs.GetFloat("PlayerPositionY"));
-            Debug.Log(this.transform.position);
         }
         
     }
