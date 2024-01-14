@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float speed; 
-    public Animator animator; 
+    public Animator animator;
+    public int health;
+    public event EventHandler<int> HealthChange;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +22,11 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         animator = this.GetComponent<Animator>();
+    }
+
+    private void CollisionPlayerController_HealthChange(object sender, int e)
+    {
+         
     }
 
     // Update is called once per frame
